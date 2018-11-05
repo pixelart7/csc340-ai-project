@@ -12,6 +12,7 @@
   <h1>AI Project</h1>
   <video autoplay playsinline muted id="videoElement" width="150" height="150"></video>
   <button id="predict">Predict</button>
+  <pre id="output">Output:<br></pre>
   <script>
     var model = {}
 
@@ -49,12 +50,15 @@
       }
 
       model = await tf.loadModel('models/2018-11-04/model.json');
+      document.querySelector('#output').innerHTML = document.querySelector('#output').innerHTML + 'Ready<br>';
       model.summary();
     }
     run();
 
     document.querySelector("#predict").onclick = function () {
-      model.predict(capture()).print();
+      const out = model.predict(capture());
+      console.log(out.dataSync());
+      document.querySelector('#output').innerHTML = document.querySelector('#output').innerHTML + out.dataSync() + '<br>';
     }
   </script>
 </body>
