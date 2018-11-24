@@ -10,7 +10,7 @@
 </head>
 <body>
   <h1>AI Project</h1>
-  <video autoplay playsinline muted id="videoElement" width="150" height="150"></video>
+  <video autoplay playsinline muted id="videoElement" width="96" height="96"></video>
   <button id="predict">Predict</button>
   <pre id="output">Output:<br></pre>
   <script>
@@ -29,10 +29,10 @@
       return tf.tidy(() => {
         const webcamImage = tf.fromPixels(document.querySelector("#videoElement"));
         const croppedImage = cropImage(webcamImage);
-        let imgGrayscale = croppedImage.mean(2);
-        imgGrayscale = imgGrayscale.expandDims(2);
-        console.log(imgGrayscale)
-        const batchedImage = imgGrayscale.expandDims(0);        
+        // let imgGrayscale = croppedImage.mean(2);
+        // imgGrayscale = imgGrayscale.expandDims(2);
+        // console.log(imgGrayscale)
+        const batchedImage = croppedImage.expandDims(0);        
 
         return batchedImage.toFloat();
       });
@@ -52,7 +52,7 @@
           });
       }
 
-      model = await tf.loadModel('models/2018-11-11/model.json');
+      model = await tf.loadModel('models/2018-11-24/model.json');
       document.querySelector('#output').innerHTML = document.querySelector('#output').innerHTML + 'Ready<br>';
       model.summary();
     }
